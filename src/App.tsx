@@ -6,6 +6,8 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 
 function App() {
+  console.log('App.tsx: Rendering App component');
+  
   return (
     <BrowserRouter>
       <Toaster />

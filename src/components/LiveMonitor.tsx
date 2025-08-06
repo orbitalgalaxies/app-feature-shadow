@@ -1,3 +1,4 @@
+import React from "react";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useState, useEffect } from "react";
@@ -17,7 +18,7 @@ export function LiveMonitor() {
     // Simulate real-time log entries
     const interval = setInterval(() => {
       const newLog: LogEntry = {
-        id: Math.random().toString(36).substr(2, 9),
+        id: Math.random().toString(36).substring(2, 9),
         timestamp: new Date().toLocaleTimeString(),
         level: ["info", "warning", "error", "success"][Math.floor(Math.random() * 4)] as any,
         message: [

@@ -1,3 +1,4 @@
+import React from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { BarChart3, Zap, Eye, Activity } from "lucide-react";
 
