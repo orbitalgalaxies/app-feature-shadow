@@ -174,6 +174,16 @@ const Index = () => {
                     <div className="bg-destructive h-2 rounded-full" style={{ width: "89%" }}></div>
                   </div>
                 </div>
+                
+                <div>
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-sm text-muted-foreground">GPU Usage</span>
+                    <span className="text-sm font-medium text-foreground">34%</span>
+                  </div>
+                  <div className="w-full bg-secondary rounded-full h-2">
+                    <div className="bg-info h-2 rounded-full" style={{ width: "34%" }}></div>
+                  </div>
+                </div>
               </div>
             </div>
           </Card>
