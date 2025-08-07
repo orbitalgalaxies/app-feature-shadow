@@ -68,7 +68,27 @@ export function LiveMonitor() {
           {logs.map((log) => (
             <div 
               key={log.id}
-              className="flex items-start space-x-3 p-3 bg-accent/50 rounded-lg border border-border/50 animate-slide-up"
+              role="button"
+              tabIndex={0}
+              onClick={() => {
+                try {
+                  const url = new URL(`${window.location.origin}/logs/${encodeURIComponent(log.id)}`)
+                  url.searchParams.set('level', log.level)
+                  url.searchParams.set('message', log.message)
+                  url.searchParams.set('timestamp', log.timestamp)
+                  if (log.source) url.searchParams.set('source', log.source)
+                  window.open(url.toString(), '_blank', 'noopener')
+                } catch (e) {
+                  console.error('Failed to open log details', e)
+                }
+              }}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault()
+                  ;(e.currentTarget as HTMLDivElement).click()
+                }
+              }}
+              className="flex items-start space-x-3 p-3 bg-accent/50 rounded-lg border border-border/50 animate-slide-up cursor-pointer hover:bg-accent/70 focus:outline-none focus:ring-2 focus:ring-ring"
             >
               <Badge 
                 variant="outline" 

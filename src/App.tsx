@@ -4,6 +4,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
+import LogDetails from "./pages/LogDetails";
 
 function App() {
   console.log('App.tsx: Rendering App component');
@@ -14,6 +15,7 @@ function App() {
       <Sonner />
       <Routes>
         <Route path="/" element={<Index />} />
+        <Route path="/logs/:id" element={<LogDetails />} />
         {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
         <Route path="*" element={<NotFound />} />
       </Routes>
