@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo } from "react";
-import { useParams, useSearchParams, Link } from "react-router-dom";
+import { useParams, useSearchParams, Link, useLocation } from "react-router-dom";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 
@@ -24,11 +24,13 @@ const getLevelColor = (level: Level) => {
 export default function LogDetails() {
   const { id } = useParams();
   const [params] = useSearchParams();
+  const location = useLocation();
+  const state = (location.state as Partial<{ id: string; timestamp: string; level: Level; message: string; source?: string }>) || null;
 
-  const level = (params.get("level") as Level) || "info";
-  const message = params.get("message") || "No message provided";
-  const timestamp = params.get("timestamp") || "";
-  const source = params.get("source") || "";
+  const level = (state?.level as Level) || (params.get("level") as Level) || "info";
+  const message = state?.message || params.get("message") || "No message provided";
+  const timestamp = state?.timestamp || params.get("timestamp") || "";
+  const source = state?.source || params.get("source") || "";
 
   const cause = useMemo(() => {
     if (level === "error") {

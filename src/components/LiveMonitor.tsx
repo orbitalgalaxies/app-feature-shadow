@@ -2,6 +2,7 @@ import React from "react";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 interface LogEntry {
   id: string;
@@ -13,6 +14,7 @@ interface LogEntry {
 
 export function LiveMonitor() {
   const [logs, setLogs] = useState<LogEntry[]>([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Simulate real-time log entries
@@ -71,17 +73,7 @@ export function LiveMonitor() {
               role="button"
               tabIndex={0}
               onClick={() => {
-                try {
-                  const url = new URL(`${window.location.origin}/logs/${encodeURIComponent(log.id)}`)
-                  url.searchParams.set('level', log.level)
-                  url.searchParams.set('message', log.message)
-                  url.searchParams.set('timestamp', log.timestamp)
-                  if (log.source) url.searchParams.set('source', log.source)
-                  const features = 'popup=yes,width=1100,height=800,toolbar=no,menubar=no,location=no,status=no,scrollbars=yes,resizable=yes,noopener,noreferrer'
-                  window.open(url.toString(), `log-${log.id}`, features)
-                } catch (e) {
-                  console.error('Failed to open log details', e)
-                }
+                navigate(`/logs/${encodeURIComponent(log.id)}`, { state: log })
               }}
               onKeyDown={(e) => {
                 if (e.key === 'Enter' || e.key === ' ') {
