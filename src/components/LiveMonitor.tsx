@@ -77,7 +77,8 @@ export function LiveMonitor() {
                   url.searchParams.set('message', log.message)
                   url.searchParams.set('timestamp', log.timestamp)
                   if (log.source) url.searchParams.set('source', log.source)
-                  window.open(url.toString(), '_blank', 'noopener')
+                  const features = 'popup=yes,width=1100,height=800,toolbar=no,menubar=no,location=no,status=no,scrollbars=yes,resizable=yes,noopener,noreferrer'
+                  window.open(url.toString(), `log-${log.id}`, features)
                 } catch (e) {
                   console.error('Failed to open log details', e)
                 }
