@@ -1,13 +1,21 @@
 import { MetricCard } from "@/components/MetricCard";
 import { LiveMonitor } from "@/components/LiveMonitor";
 import { StatusIndicator } from "@/components/StatusIndicator";
-import { AnalyticsDashboard } from "@/components/AnalyticsDashboard";
-import { FeatureToggle } from "@/components/FeatureToggle";
-import { SilentWatcher } from "@/components/SilentWatcher";
+import { Suspense, lazy } from "react";
 import { NavigationTabs } from "@/components/NavigationTabs";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Activity, Users, Server, AlertTriangle, Eye, Zap } from "lucide-react";
+
+const LazyAnalyticsDashboard = lazy(() =>
+  import("@/components/AnalyticsDashboard").then(m => ({ default: m.AnalyticsDashboard }))
+);
+const LazyFeatureToggle = lazy(() =>
+  import("@/components/FeatureToggle").then(m => ({ default: m.FeatureToggle }))
+);
+const LazySilentWatcher = lazy(() =>
+  import("@/components/SilentWatcher").then(m => ({ default: m.SilentWatcher }))
+);
 
 const Index = () => {
   const overviewContent = (
@@ -203,9 +211,21 @@ const Index = () => {
         <NavigationTabs>
           {{
             overview: overviewContent,
-            analytics: <AnalyticsDashboard />,
-            features: <FeatureToggle />,
-            watcher: <SilentWatcher />
+            analytics: (
+              <Suspense fallback={<div aria-busy="true" className="p-6 text-sm text-muted-foreground">Loading analytics…</div>}>
+                <LazyAnalyticsDashboard />
+              </Suspense>
+            ),
+            features: (
+              <Suspense fallback={<div aria-busy="true" className="p-6 text-sm text-muted-foreground">Loading features…</div>}>
+                <LazyFeatureToggle />
+              </Suspense>
+            ),
+            watcher: (
+              <Suspense fallback={<div aria-busy="true" className="p-6 text-sm text-muted-foreground">Starting watcher…</div>}>
+                <LazySilentWatcher />
+              </Suspense>
+            )
           }}
         </NavigationTabs>
       </div>
